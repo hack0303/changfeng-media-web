@@ -18,11 +18,20 @@ public class EnterPoint implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigApplicationContext rootCtx=new AnnotationConfigApplicationContext();
 		rootCtx.register(RootConfig.class);
+		rootCtx.refresh();
 		AnnotationConfigWebApplicationContext dispatcherCtx=new AnnotationConfigWebApplicationContext();
 		dispatcherCtx.register(DispatcherConfig.class);
 		ServletRegistration.Dynamic dispatcher=servletContext.addServlet("dispatcher",new DispatcherServlet(dispatcherCtx));
 		dispatcher.setLoadOnStartup(1);
-		dispatcher.addMapping("/*");
+		dispatcher.addMapping("/app/*");
+		dispatcherCtx.refresh();
+		/**
+		java.util.Properties props=System.getProperties();
+		for(Map.Entry<Object,Object> entry:props.entrySet()) {
+			System.out.println(entry.getKey()+"="+entry.getValue());
+		}
+		*/
+		
 	}
 
 }

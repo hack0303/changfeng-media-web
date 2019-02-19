@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.creating.www</groupId>
-  <artifactId>changfeng</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>changfeng Maven Webapp</name>
- 	<url>http://maven.apache.org</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.creating.www</groupId>
+	<artifactId>changfeng</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>changfeng Maven Webapp</name>
+	<url>http://maven.apache.org</url>
 	<developers>
 		<developer>
 			<roles>
@@ -22,6 +23,17 @@
 		<junit.version>4.12</junit.version>
 		<hibernate.version>5.0.6.Final</hibernate.version>
 		<javax.servlet-api>3.1.0</javax.servlet-api>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<build.plugins.plugin.version>3.1</build.plugins.plugin.version>
+		<!-- 对应 org.codehaus.mojo 的tomcat -->
+		<maven.tomcat.url>http://localhost</maven.tomcat.url>
+		<maven.tomcat.path>/</maven.tomcat.path>
+		<maven.tomcat.port>80</maven.tomcat.port>
+		<maven.tomcat.uriEncoding>UTF-8</maven.tomcat.uriEncoding>
+		<maven.tomcat.update>true</maven.tomcat.update>
+		<maven.tomcat.server>server7</maven.tomcat.server>
+		<tomcat.maven.version>2.2</tomcat.maven.version>
 	</properties>
 	<dependencies>
 		<!-- Compile -->
@@ -66,7 +78,21 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>me</finalName>
+		<finalName>changfeng-video</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat6-maven-plugin</artifactId>
+					<version>${tomcat.maven.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>${tomcat.maven.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -78,8 +104,7 @@
 							<goal>compile</goal>
 						</goals>
 						<configuration>
-							<source>${java-version}</source>
-							<target>${java-version}</target>
+							<source>${maven.compiler.source}</source>
 						</configuration>
 					</execution>
 					<execution>
@@ -91,18 +116,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 修改了配置还是用的默认参数，修改不了，无语，弃用 <plugin> <groupId>org.codehaus.mojo</groupId> 
+				<artifactId>tomcat-maven-plugin</artifactId> <version>1.1</version> </plugin> -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.1</version>
-				<configuration>
-					<path>/</path>
-					<port>8080</port>
-					<uriEncoding>UTF-8</uriEncoding>
-					<update>true</update>
-					<url>http://localhost:8080</url>
-					<server>tomcat7</server>
-				</configuration>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
